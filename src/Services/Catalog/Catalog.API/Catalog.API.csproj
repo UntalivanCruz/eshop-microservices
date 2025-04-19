@@ -24,6 +24,7 @@
 
     <ItemGroup>
       <PackageReference Include="Carter" Version="9.0.0" />
+      <PackageReference Include="Marten" Version="8.0.0-alpha-5" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
     </ItemGroup>
 

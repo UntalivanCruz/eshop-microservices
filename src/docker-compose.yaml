@@ -1,0 +1,7 @@
+﻿name: eshop-microservices
+services:
+  catalogdb:
+    image: postgres:17.4
+
+volumes:
+  postgres_catalog:
