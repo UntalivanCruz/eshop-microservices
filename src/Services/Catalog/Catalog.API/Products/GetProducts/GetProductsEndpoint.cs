@@ -12,7 +12,6 @@ public class GetProductsEndpoint: ICarterModule
             return Results.Ok(response);
         })
         .WithName("GetProducts")
-        .WithTags("Products")
         .Produces<GetProductsResponse>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status500InternalServerError)
         .WithSummary("Get all products")
