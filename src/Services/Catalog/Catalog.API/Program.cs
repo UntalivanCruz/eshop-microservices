@@ -1,15 +1,26 @@
 #region Step 1: Configuration Setup
-    var builder = WebApplication.CreateBuilder(args);
+
+using BuildingBlocks.Behaviors;
+using Catalog.API.Products.CreateProduct;
+using FluentValidation;
+
+var builder = WebApplication.CreateBuilder(args);
 #endregion Step 1: Configuration Setup
     
 #region Step2: Service Registration
     #region Step2.1: Add services to the DI container.
 
+        var assembly = typeof(Program).Assembly;
+
         builder.Services.AddEndpointsApiExplorer()
         .AddSwaggerGen()
         .AddCarter()
-        .AddMediatR(config => 
-            config.RegisterServicesFromAssembly(typeof(Program).Assembly))
+        .AddValidatorsFromAssembly(assembly)
+        .AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(assembly);
+            config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+        })
         .AddMarten(opts =>
             opts.Connection(builder.Configuration.GetConnectionString("Database")!))
             .UseLightweightSessions();
