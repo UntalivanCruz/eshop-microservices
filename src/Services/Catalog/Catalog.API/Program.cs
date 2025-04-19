@@ -4,7 +4,12 @@
     
 #region Step2: Service Registration
     #region Step2.1: Add services to the DI container.
-    
+
+        builder.Services.AddCarter();
+        builder.Services.AddMediatR(config => 
+            config.RegisterServicesFromAssembly(typeof(Program).Assembly));
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
     #endregion Step2.1: Add services to the DI container.
     
     #region Step2.2: Add database context
@@ -15,6 +20,16 @@
 #region Step3: Build the application
     var app = builder.Build();
 #endregion Step3: Build the application
+    
+#region Step4: Middleware Pipeline Configuration
+
+    app.MapCarter();
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+#endregion Step4: Middleware Pipeline Configuration
     
 #region Step5: Start the Application
     app.Run();
